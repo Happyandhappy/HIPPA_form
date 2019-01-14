@@ -51,7 +51,7 @@
 	function getAllContacts(){
 		$api = $_SESSION['api'];
 		$res = $api->getAllContacts();
-		
+		var_dump($res);exit;
 		$data = array();
 		foreach ($res->data as $key => $value) {
 			array_push($data, array("id" => $key, "value" => $value->Full_Name));

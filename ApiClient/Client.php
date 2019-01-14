@@ -185,12 +185,8 @@ class ApiClient
 	public function _AllObjects($nameOfobj){
 		$url = $this->endpoint . "/index.php/" . $nameOfobj . "/all?access_token=" . $this->Token;
 		$res = $this->_GET($url);
-		$resdt = json_decode($res);
-		if ($this->_error($resdt)){
-			return null;
-		}else{
-			return $resdt;
-		}
+		$resdt = json_decode($res);		
+		return $resdt;
 	}
 
 	/*
