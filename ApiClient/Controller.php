@@ -39,6 +39,7 @@
 
 	function getAllFacilities(){
 		if (!isset($_SESSION['api'])) return array("status" => 'faild', 'message' => 'You need to login');
+		var_dump("here");
 		$api = $_SESSION['api'];
 		$res = $api->getAllFacilities();
 		var_dump($res);exit;
@@ -62,7 +63,7 @@
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){		
 		$name = $_POST['req_name'];
-		echo $name;
+
 		switch ($name) {
 			case 'device-registry':
 				$res = DeviceRegistry($_POST);
