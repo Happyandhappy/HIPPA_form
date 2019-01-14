@@ -1,10 +1,10 @@
 <?php
 session_start();
-include('config/config.php');
+include(realpath( dirname( __FILE__ ) ).'\..\config\config.php');
 /**
  * Class Name  : Api
  */
-class Api
+class ApiClient
 {	
 	protected $endpoint 	= "";	
 	protected $org_id 		= "";
@@ -61,10 +61,17 @@ class Api
 	 * @params 		string 	$url, array   body
 	 * @return 		mixed
 	 */
-	public function _POST($url, $body){
+	public function _POST($url, $body, $is_login = false){
+				
 		$ch = $this->getClient($url);
-		curl_setopt($ch, CURLOPT_POST, true);		
-		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($body));
+		if (!$is_login){
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			    'Content-Type: application/json',
+				'Accept :application/json',
+			));			
+		}
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
 		return $this->_exec($ch);
 	}
 
@@ -115,7 +122,7 @@ class Api
 		);
 
 		$loginUrl = $this->endpoint . "/login.php";
-		$res = $this->_POST($loginUrl, $fields);
+		$res = $this->_POST($loginUrl, http_build_query($fields), true);
 
 		$resdt = json_decode($res);
 		if ($this->_error($resdt)){			
@@ -203,8 +210,40 @@ class Api
 	 */
 	public function getAllDeviceRegistry(){
 		$res = $this->_AllObjects("device-registry");
-		var_dump($res);
+		// var_dump($res);
+		return $res;
 	}
 
+	/*
+	 * @Name  	insertDeviceRegistry
+	 * @params  $fields
+	 * @return  mixed
+	 */
+	public function insertDeviceRegistry($fields){		
+		$url = $this->endpoint . "/index.php/device-registry?access_token=" . $this->Token;
+		$res = $this->_POST($url, json_encode($fields));
+		return json_decode($res);
+	}
+
+
+	/*
+	 * @Name  	getAllFacilities
+	 * @params  None
+	 * @return  mixed
+	 */
+	public function getAllFacilities(){		
+		$res = $this->_AllObjects("facility");
+		return $res;
+	}
+
+	/*
+	 * @Name  	getAllContacts
+	 * @params  None
+	 * @return  mixed
+	 */
+	public function getAllContacts(){		
+		$res = $this->_AllObjects("contact");
+		return $res;
+	}
 
 }

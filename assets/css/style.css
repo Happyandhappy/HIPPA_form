@@ -18,7 +18,7 @@
   color: #fff;
   cursor: pointer;
   border: 1px solid transparent;
-  padding: 5px 24px;
+  padding: 8px 24px;
   margin-top: 2.25rem;
   position: relative;
   z-index: 0;
@@ -123,8 +123,8 @@
 .form-checkbox,
 .form-radio {
   position: relative;
-  margin-top: 2.25rem;
-  margin-bottom: 2.25rem;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
   text-align: left;
 }
 
@@ -291,9 +291,9 @@
   background: #fff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.56s cubic-bezier(0.25, 0.8, 0.25, 1);
-  max-width: 500px;
+  max-width: 700px;
   padding: 0;
-  margin: 50px auto;
+  margin: 100px auto;
 }
 
 .form-card:hover,
@@ -309,7 +309,7 @@
   position: relative;
   display: -ms-flexbox;
   display: flex;
-  margin-top: 2.25rem;
+  margin-top: 0rem;
 }
 
 .form-actions .form-btn-cancel {
@@ -330,6 +330,13 @@
   -ms-flex: 1;
   flex: 1;
   margin-top: 0;
+}
+
+.form-btn{
+    max-width: 90%;
+    margin-left: 5%;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .form-fieldset {
@@ -542,7 +549,87 @@ body {
 .alert-dismissible, .alert-dismissible .close{
     padding: .5rem 0.8rem;
 }
-
+/*
 .navbar{
   padding: .5rem 1.5rem .5rem 1.0rem;
+}*/
+
+@media (min-width: 992px){
+  .navbar-expand-lg .navbar-nav .nav-link {
+      padding-right: 0.8rem;
+      padding-left:  0.8rem;
+  }
+  .navbar{
+      padding: 0.5rem 1.5rem .5rem 1.0rem;;    
+  }
+}
+
+#login{
+  max-width: 500px;
+}
+
+.row .form-element{
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+
+
+/* Spiner*/
+.animationload {
+    background-color: #fff;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+}
+.osahanloading {
+    animation: 1.5s linear 0s normal none infinite running osahanloading;
+    background: #fed37f none repeat scroll 0 0;
+    border-radius: 50px;
+    height: 50px;
+    left: 50%;
+    margin-left: -25px;
+    margin-top: -25px;
+    position: absolute;
+    top: 50%;
+    width: 50px;
+}
+.osahanloading::after {
+    animation: 1.5s linear 0s normal none infinite running osahanloading_after;
+    border-color: #85d6de transparent;
+    border-radius: 80px;
+    border-style: solid;
+    border-width: 10px;
+    content: "";
+    height: 80px;
+    left: -15px;
+    position: absolute;
+    top: -15px;
+    width: 80px;
+}
+@keyframes osahanloading {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        background: #85d6de none repeat scroll 0 0;
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.hidden {
+  display: none;
+}
+
+.btn{
+    max-width: 100%;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
 }

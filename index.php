@@ -1,147 +1,158 @@
 <?php
-// session_start();
-require_once('Api.php');
-
+require_once('ApiClient/Client.php');
 if (!isset($_SESSION['user']) || !isset($_SESSION['api'])){
 	header("Location: login.php");
 	exit();
 }
-$api = $_SESSION['api'];
-// $api->ReLogin();
-// $deviceMetadt = $api->_Metadata("device-registry");
-// $api->getAllLeads();
-// var_dump($deviceMetadt);
 ?>
 
-
 <?php include('layout/header.php');?>
-<form class="form-card">
+
+<!-- Spiner -->
+<div class="animationload">
+    <div class="osahanloading"></div>
+</div>
+
+<!-- Form -->
+<div class="form-card">
     <fieldset class="form-fieldset">
         <legend class="form-legend">HIPPA Form</legend>
-        <div class="form-radio form-radio-inline">
-            <div class="form-radio-legend">Prefered Pronoun</div>
-            <label class="form-radio-label">
-                <input name=pronoun class="form-radio-field" type="radio" required value="He" />
-                <i class="form-radio-button"></i>
-                <span>He</span>
-            </label>
-            <label class="form-radio-label">
-                <input name=pronoun class="form-radio-field" type="radio" required value="She" />
-                <i class="form-radio-button"></i>
-                <span>She</span>
-            </label>
-            <label class="form-radio-label">
-                <input name=pronoun class="form-radio-field" type="radio" required value="They" />
-                <i class="form-radio-button"></i>
-                <span>They</span>
-            </label>
-            <label class="form-radio-label">
-                <input name=pronoun class="form-radio-field" type="radio" required value="Ze" />
-                <i class="form-radio-button"></i>
-                <span>Ze</span>
-            </label>
-            <label class="form-radio-label">
-                <input name=pronoun class="form-radio-field" type="radio" required value="A pronoun not listed" />
-                <i class="form-radio-button"></i>
-                <span>A pronoun not listed</span>
-            </label>
-            <label class="form-radio-label">
-                <input name=pronoun class="form-radio-field" type="radio" required value="No pronoun preference" />
-                <i class="form-radio-button"></i>
-                <span>No pronoun preference</span>
-            </label>
-            <small class="form-element-hint">Feel free to choose</small>
-        </div>
-        <div class="form-element form-input">
-            <input id="field-omv6eo-metm0n-5j55wv-w3wbws-6nm2b9" class="form-element-field" placeholder="Please fill in your full name" type="input" required/>
-            <div class="form-element-bar"></div>
-            <label class="form-element-label" for="field-omv6eo-metm0n-5j55wv-w3wbws-6nm2b9">Name</label>
-        </div>
-        <div class="form-element form-input form-has-error">
-            <input id="field-x98ezh-s6s2g8-vfrkgb-ngrhef-atfkop" class="form-element-field -hasvalue" placeholder=" " type="number" required value="13" />
-            <div class="form-element-bar"></div>
-            <label class="form-element-label" for="field-x98ezh-s6s2g8-vfrkgb-ngrhef-atfkop">Your age</label>
-            <small class="form-element-hint">You are way to young, sorry</small>
-        </div>
-        <div class="form-element form-input">
-            <input id="field-uyzeji-352rnc-4rv3g1-bvlh88-9dewuz" class="form-element-field" placeholder=" " type="email" required/>
-            <div class="form-element-bar"></div>
-            <label class="form-element-label" for="field-uyzeji-352rnc-4rv3g1-bvlh88-9dewuz">Email</label>
-            <small class="form-element-hint">We will never spam you!</small>
-        </div>
-        <div class="form-checkbox form-checkbox-inline">
-            <div class="form-checkbox-legend">Which type of music do you like?</div>
-            <label class="form-checkbox-label">
-                <input name=rap class="form-checkbox-field" type="checkbox" />
-                <i class="form-checkbox-button"></i>
-                <span>Rap</span>
-            </label>
-            <label class="form-checkbox-label">
-                <input name=pop class="form-checkbox-field" type="checkbox" />
-                <i class="form-checkbox-button"></i>
-                <span>Pop</span>
-            </label>
-            <label class="form-checkbox-label">
-                <input name=rock class="form-checkbox-field" type="checkbox" />
-                <i class="form-checkbox-button"></i>
-                <span>Rock</span>
-            </label>
-            <label class="form-checkbox-label">
-                <input name=metal class="form-checkbox-field" type="checkbox" />
-                <i class="form-checkbox-button"></i>
-                <span>Metal</span>
-            </label>
-            <label class="form-checkbox-label">
-                <input name=r_b class="form-checkbox-field" type="checkbox" />
-                <i class="form-checkbox-button"></i>
-                <span>R&amp;B</span>
-            </label>
-        </div>
+
+        <?php if (isset($error)) {?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>Warning!</strong> <?php echo $error; ?>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+        <?php } ?>
+
+        <!-- Name of Registry -->
         <div class="form-element form-select">
-            <select id="field-be1h8i-ll2hpg-q4efzm-nfjj1e-udkw5r" class="form-element-field">
+            <select id="_name" class="form-element-field" required>
                 <option disabled selected value="" class="form-select-placeholder"></option>
-                <option value="Rap">Rap</option>
-                <option value="Pop">Pop</option>
-                <option value="Rock">Rock</option>
-                <option value="Metal">Metal</option>
-                <option value="R&amp;B">R&amp;B</option>
+                <option value="#device_registry">Device Registry</option>
+                <option value="#leads">Leads</option>
+                <option value="#contact">Contact</option>
+                <option value="#facility">Facility</option>
+                <option value="#hardware_inventory">Hardware Inventory</option>
+                <option value="#software_inventory">Software Inventory</option>
             </select>
             <div class="form-element-bar"></div>
-            <label class="form-element-label" for="field-be1h8i-ll2hpg-q4efzm-nfjj1e-udkw5r">Select your favorite music genre</label>
+            <label class="form-element-label" for="_name">Select Registry Name</label>
         </div>
-        <div class="form-radio form-radio-block">
-            <div class="form-radio-legend">I prefer…</div>
-            <label class="form-radio-label">
-                <input name=eat class="form-radio-field" type="radio" value="vagatarian food" />
-                <i class="form-radio-button"></i>
-                <span>vagatarian food</span>
-            </label>
-            <label class="form-radio-label">
-                <input name=eat class="form-radio-field" type="radio" value="vegan food" />
-                <i class="form-radio-button"></i>
-                <span>vegan food</span>
-            </label>
-            <label class="form-radio-label">
-                <input name=eat class="form-radio-field" type="radio" value="food with fish" />
-                <i class="form-radio-button"></i>
-                <span>food with fish</span>
-            </label>
-            <label class="form-radio-label">
-                <input name=eat class="form-radio-field" type="radio" value="food with meat" />
-                <i class="form-radio-button"></i>
-                <span>food with meat</span>
-            </label>
-        </div>
-        <div class="form-element form-textarea">
-            <textarea id="field-3naeph-0f3yuw-x153ph-dzmahy-qhkmgm" class="form-element-field" placeholder=" "></textarea>
-            <div class="form-element-bar"></div>
-            <label class="form-element-label" for="field-3naeph-0f3yuw-x153ph-dzmahy-qhkmgm">Your Message</label>
 
-        </div>
+        <form id="device_registry" method="post" data-toggle="validator" role="form">
+            <input type="hidden" name="req_name" value="device-registry">
+            <!-- Name -->
+            <div class="form-element form-input">
+                <input id="Name" class="form-element-field" name="Name" placeholder="Please fill in your full name" type="input" required autocomplete="off" />
+                <div class="form-element-bar"></div>
+                <label class="form-element-label" for="Name">Name</label>
+            </div>
+
+            <!-- Active -->
+            <div class="form-checkbox form-checkbox-inline">
+                <div class="form-checkbox-legend">Active Status?</div>
+                <label class="form-checkbox-label">
+                    <input name="Active" class="form-checkbox-field" type="checkbox" />
+                    <i class="form-checkbox-button"></i>
+                    <span>Active</span>
+                </label>
+            </div>
+            <div class="row">
+                <!-- Assigned_Facility -->                
+                <div class="col-sm form-element form-select">
+                    <select id="Assigned_Facility" name="Assigned_Facility" class="form-element-field" required>
+                        <option disabled selected value="" class="form-select-placeholder"></option>
+                        <?php 
+                            foreach ($allFacilities as $row) {
+                                echo '<option value="' . $row['id'] . '">' . $row['value'] .'</option>';   
+                            }
+                        ?>
+                    </select>
+                    <div class="form-element-bar"></div>
+                    <label class="form-element-label" for="Assigned_Facility">Select Facility</label>
+                </div>
+
+                <!-- IP address -->
+                <div class="col-sm form-element form-input">
+                    <input id="IP_Address" class="form-element-field" name="IP_Address" placeholder="Please fill in IP Address" type="input" required autocomplete="off"/>
+                    <div class="form-element-bar"></div>
+                    <label class="form-element-label" for="IP_Address">IP Address</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Last_Polling_Time -->
+                <div class="col-sm form-element form-input">
+                    <input id="Last_Polling_Time" class="form-element-field" name="Last_Polling_Time" placeholder="Please fill in IP Address" type="input" required autocomplete="off" disabled=""  value="2017-08-14T16:50:45.000Z" />
+                    <div class="form-element-bar"></div>
+                    <label class="form-element-label" for="Last_Polling_Time">Last Polling Time</label>
+                </div>
+                <!-- Polling_Time -->
+                <div class="col-sm form-element form-input">
+                    <input id="Polling_Time" class="form-element-field" name="Polling_Time" placeholder="Please fill in Polling Time" type="number" required autocomplete="off"/>
+                    <div class="form-element-bar"></div>
+                    <label class="form-element-label" for="Polling_Time">Polling Time</label>
+                </div>  
+            </div>
+            <div class="row">
+                <!-- Organization -->
+                <div class="col-sm form-element form-input">
+                    <input id="Organization" class="form-element-field" name="Organization" placeholder="Please fill in Organization" type="input" required autocomplete="off"/>
+                    <div class="form-element-bar"></div>
+                    <label class="form-element-label" for="Organization">Organization</label>
+                </div>
+
+
+                <!-- User_assigned -->
+                <div class="col-sm form-element form-select">
+                    <select id="User_assigned" name="User_assigned" class="form-element-field" required>
+                        <option disabled selected value="" class="form-select-placeholder"></option>
+                    </select>
+                    <div class="form-element-bar"></div>
+                    <label class="form-element-label" for="User_assigned">Select User assigned</label>
+                </div>
+            </div>
+            <!-- Notes -->
+            <div class="form-element form-textarea">
+                <textarea id="Notes" class="form-element-field" placeholder=" " name="Notes"></textarea>
+                <div class="form-element-bar"></div>
+                <label class="form-element-label" for="Notes">Notes</label>
+            </div>
+
+            <div class="form-actions">
+                <button class="form-btn btn" type="submit" id="submit">Send Request</button>
+            </div>
+        </form>        
+
+        <form id="leads"  method="post"></form>
+
+        <form id="contact"  method="post"></form>
+
+        <form id="facility"  method="post"></form>
+
+        <form id="hardware_inventory" method="post"></form>
+
+        <form id="software_inventory" method="post"></form>
+
     </fieldset>
-    <div class="form-actions">
-        <button class="form-btn" type="submit">Send inquiry</button>
-        <button class="form-btn-cancel -nooutline" type="reset">Cancel</button>
-    </div>
-</form>
+</div>
 <?php include('layout/footer.php'); ?>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var client = new Client();
+        client.getallFacilities();
+        client.getallContacts();
+        $('.animationload').addClass('hidden');
+
+        $('#device_registry').on('submit', function (e) {
+            e.preventDefault();
+            if ($('#submit').hasClass('disabled')){
+                return;
+            }
+            client.insertDeviceRegistry();
+        });
+    });
+</script>

@@ -1,12 +1,12 @@
 <?php
-require_once('Api.php');
+require_once('ApiClient/Client.php');
 session_unset();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	if (isset($_POST['email']) && isset($_POST['password'])){
 		$_SESSION['USERNAME'] = $_POST['email'];
 		$_SESSION['PASSWORD'] = $_POST['password'];
-		$api = new Api(ORGID, $_SESSION['USERNAME'], $_SESSION['PASSWORD'], CLIENTID, CLIENTSECURITY);
+		$api = new ApiClient(ORGID, $_SESSION['USERNAME'], $_SESSION['PASSWORD'], CLIENTID, CLIENTSECURITY);
 		if ($api->Login()) {			
 			$_SESSION['api'] = $api;
 			header("Location: index.php");
@@ -20,9 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 ?>
 
 <?php require_once('layout/header.php'); ?>
-<form class="form-card" method="post">
+<form class="form-card" method="post" id="login">
 	<fieldset class="form-fieldset">
-		<legend class="form-legend">HIPPA Login</legend>
+		<legend class="form-legend">
+			<img src="https://hipaacomplete.com/wp/wp-content/uploads/logo.png">			
+		</legend>
 		<?php if (isset($error)) {?>
 			<div class="alert alert-danger alert-dismissible fade show" role="alert">
 			  <strong>Warning!</strong> <?php echo $error; ?>
@@ -43,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
             <input id="password" class="form-element-field"  name="password" placeholder="Please fill in your password" type="password" required autocomplete="off"/>
             <div class="form-element-bar"></div>
             <label class="form-element-label" for="password">Password</label>
-    	</div>        	
+    	</div>
 	</fieldset>
     <div class="form-actions">
         <button class="form-btn" type="submit">Login</button>
