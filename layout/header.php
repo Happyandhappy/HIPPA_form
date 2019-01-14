@@ -11,10 +11,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
   <!-- Bootstrap 4 -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-  <!-- DateTime Picker -->
-  <link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
-
-  <!-- Custom CSS -->
+    <!-- Custom CSS -->
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>

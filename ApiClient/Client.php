@@ -200,7 +200,7 @@ class ApiClient
 	 */
 	public function getAllLeads(){
 		$res = $this->_AllObjects("lead");
-		var_dump($res);
+		return $res;
 	}
 
 	/*

@@ -12,15 +12,25 @@ function unsetForm(){
 	});
 }
 
+var ajaxCnt = 0;
 var Client = function(){}
 
 Client.prototype = {
-	base_url : "ApiClient/Controller.php",	
+	base_url : "ApiClient/Controller.php",
+	ajaxCnt  : 0,
+
 	getallFacilities : async function(){
 	    $.ajax({
 	        url : this.base_url,
 	        method : 'post',
 	        data : { "req_name" : "allfacilities" },
+	        beforeSend : function(){	        	
+	        	ajaxCnt++;
+	        },
+	        complete : function(){
+	        	ajaxCnt = ajaxCnt - 1;
+	        	if (ajaxCnt == 0) $('.animationload').addClass('hidden');
+	        },
 	        success : function(res){	        	
 	            var dt = JSON.parse(res);
 	            if (dt.status === "success"){
@@ -33,11 +43,19 @@ Client.prototype = {
 	        }
 	    });
 	},
+
 	getallContacts : function(){
 	    $.ajax({
 	        url : this.base_url,
 	        method : 'post',
 	        data : { "req_name" : "allcontacts" },
+	        beforeSend : function(){	        	
+	        	ajaxCnt = ajaxCnt + 1
+	        },
+	        complete : function(){
+	        	ajaxCnt = ajaxCnt - 1
+	        	if (ajaxCnt == 0) $('.animationload').addClass('hidden');
+	        },
 	        success : function(res){
 	            var dt = JSON.parse(res);
 	            if (dt.status === "success"){
@@ -50,22 +68,21 @@ Client.prototype = {
 	        }
 	    });
 	},
+
 	insertDeviceRegistry : function(){
 		var fields = {
-			"req_name" : "device-registry",
-			"Name" : $('#Name').val(),
+			"req_name" 		: "device-registry",
+			"Name" 			: $('#Name').val(),
 			"Assigned_Facility" : $("#Assigned_Facility").val(),
-			"IP_Address" : $('#IP_Address').val(),
+			"IP_Address" 	: $('#IP_Address').val(),
 			"Last_Polling_Time" : $('#Last_Polling_Time').val(),
-			"Polling_Time" : $('#Polling_Time').val(),
-			"Organization" : $('#Organization').val(),
+			"Polling_Time" 	: $('#Polling_Time').val(),
+			"Organization" 	: $('#Organization').val(),
 			"User_assigned" : $('#User_assigned').val(),
-			"Notes" : $('#Notes').val()
+			"Notes"			: $('#Notes').val()
 		}
 
-
 		$('#Active').prop("checked") == true ? fields['Active'] =  "on": console.log("Not checked");
-
 
 		$('.animationload').removeClass('hidden');
 		$.ajax({
@@ -75,7 +92,7 @@ Client.prototype = {
 			success : function(res){
 				$('.animationload').addClass('hidden');
 				var dt = JSON.parse(res);
-				alert(dt.message);				
+				alert(dt.message);
 			}
 		});
 	}

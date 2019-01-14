@@ -42,6 +42,7 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['api'])){
             <label class="form-element-label" for="_name">Select Registry Name</label>
         </div>
 
+        <!-- Device Registry Form -->
         <form id="device_registry" method="post" data-toggle="validator" role="form">
             <input type="hidden" name="req_name" value="device-registry">
             <!-- Name -->
@@ -117,7 +118,7 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['api'])){
             </div>
             <!-- Notes -->
             <div class="form-element form-textarea">
-                <textarea id="Notes" class="form-element-field" placeholder=" " name="Notes"></textarea>
+                <textarea id="Notes" class="form-element-field" placeholder=" " name="Notes" required></textarea>
                 <div class="form-element-bar"></div>
                 <label class="form-element-label" for="Notes">Notes</label>
             </div>
@@ -127,16 +128,20 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['api'])){
             </div>
         </form>        
 
-        <form id="leads"  method="post"></form>
+        <!-- Leads Entry Form -->
+        <form id="leads"  method="post" data-toggle="validator" role="form"></form>
 
-        <form id="contact"  method="post"></form>
+        <!-- Contact Entry Form -->
+        <form id="contact"  method="post" data-toggle="validator" role="form"></form>
 
-        <form id="facility"  method="post"></form>
+        <!-- Facility Entry Form -->
+        <form id="facility"  method="post" data-toggle="validator" role="form"></form>
 
-        <form id="hardware_inventory" method="post"></form>
+        <!-- Hardware Inventory Entry Form -->
+        <form id="hardware_inventory" method="post" data-toggle="validator" role="form"></form>
 
-        <form id="software_inventory" method="post"></form>
-
+        <!-- Software Inventory Entry Form -->
+        <form id="software_inventory" method="post" data-toggle="validator" role="form"></form>
     </fieldset>
 </div>
 <?php include('layout/footer.php'); ?>
@@ -145,13 +150,11 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['api'])){
         var client = new Client();
         client.getallFacilities();
         client.getallContacts();
-        $('.animationload').addClass('hidden');
+        // $('.animationload').addClass('hidden');
 
         $('#device_registry').on('submit', function (e) {
             e.preventDefault();
-            if ($('#submit').hasClass('disabled')){
-                return;
-            }
+            if ($('#submit').hasClass('disabled')) return;
             client.insertDeviceRegistry();
         });
     });

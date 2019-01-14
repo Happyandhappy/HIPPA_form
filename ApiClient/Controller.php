@@ -34,7 +34,7 @@
         if ($res[0]->status == "error"){
         	$res = array("status" => "faild", "message" => $res[0]->message);
         }
-        return $res;
+        return $res[0];
 	}
 
 	function getAllFacilities(){
@@ -59,9 +59,7 @@
 		return array("status" => "success", "message" => $data);
 	}
 
-	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-		// var_dump($_POST);
-
+	if ($_SERVER['REQUEST_METHOD'] == 'POST'){		
 		$name = $_POST['req_name'];
 
 		switch ($name) {
