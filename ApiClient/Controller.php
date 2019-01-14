@@ -41,6 +41,7 @@
 		if (!isset($_SESSION['api'])) return array("status" => 'faild', 'message' => 'You need to login');
 		$api = $_SESSION['api'];
 		$res = $api->getAllFacilities();
+		var_dump($res);exit;
 		$data = array();
 		foreach ($res->data as $key => $value) {
 			array_push($data, array("id" => $key, "value" => $value->Name));
