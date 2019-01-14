@@ -1,7 +1,5 @@
 <?php
-	require_once('Client.php');
-
-	echo "Here";
+	require_once('Client.php');	
 
 	function login($cred){
 		session_unset();
@@ -64,7 +62,7 @@
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){		
 		$name = $_POST['req_name'];
-
+		echo $name;
 		switch ($name) {
 			case 'device-registry':
 				$res = DeviceRegistry($_POST);
