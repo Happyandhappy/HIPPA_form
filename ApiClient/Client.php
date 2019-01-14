@@ -227,7 +227,7 @@ class ApiClient
 	 * @params  None
 	 * @return  mixed
 	 */
-	public function getAllFacilities(){		
+	public function getAllFacilities(){
 		$res = $this->_AllObjects("facility");
 		return $res;
 	}

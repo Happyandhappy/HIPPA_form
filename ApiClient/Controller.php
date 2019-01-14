@@ -40,8 +40,8 @@
 	function getAllFacilities(){
 		if (!isset($_SESSION['api'])) return array("status" => 'faild', 'message' => 'You need to login');		
 		$api = $_SESSION['api'];
-		$res = $api->getAllFacilities();
-		var_dump("here");
+		var_dump($api);
+		$res = $api->getAllFacilities();		
 		var_dump($res);exit;
 		$data = array();
 		foreach ($res->data as $key => $value) {
