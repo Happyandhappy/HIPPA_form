@@ -1,6 +1,6 @@
 <?php
 	require_once('Client.php');	
-
+	echo ORGID;
 	function login($cred){
 		session_unset();
 		if (isset($cred['email']) && isset($cred['password'])){
