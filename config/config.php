@@ -1,7 +1,7 @@
 <?php
- 	define("ORGID", "a0C550000001a0tEAA");
- 	define("USERNAME", "widadsaghir1993@gmail.com");
- 	define("PASSWORD", "ahgifrhehdejd1!");
+ 	define("ORGID", "");
+ 	define("USERNAME", "");
+ 	define("PASSWORD", "");
  	define('SERVICEURL', 'hipaadev.us'); 	
  	define("CLIENTID", "kXpy8tUuC6S2n0fE7cDd5xmLPha3BRGs");
  	define("CLIENTSECURITY", "MqHKRbJDkEgSGXscwmor");
