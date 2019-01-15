@@ -128,9 +128,8 @@ Client.prototype = {
 	                for (i = 0 ; i < objKeys.length; i++){
 	                	var obj = dt.message[objKeys[i]];
 	                	bodyContent += "<tr> <td>" + (i+1) + "</td>";
-	                	for (var j = 0 ; j < keys.length ; j++) {	                		
-	                		var value = "";
-	                		if (obj[keys[j]] !="null") value = obj[keys[j]];
+	                	for (var j = 0 ; j < keys.length ; j++) {
+	                		obj[keys[j]] !==null ? value = obj[keys[j]] : value="";	                		
 	                		bodyContent += "<td>" + value + "</td>";
 	                	}
 	                	bodyContent += "</tr>";
