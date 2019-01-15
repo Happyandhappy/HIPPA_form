@@ -1,12 +1,13 @@
 <?php
-require_once('ApiClient/Client.php');
+require_once(__DIR__.'/ApiClient/Client.php');
 session_unset();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-	if (isset($_POST['email']) && isset($_POST['password'])){
+	if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['orgid'])){
 		$_SESSION['USERNAME'] = $_POST['email'];
 		$_SESSION['PASSWORD'] = $_POST['password'];
-		$api = new ApiClient(ORGID, $_SESSION['USERNAME'], $_SESSION['PASSWORD'], CLIENTID, CLIENTSECURITY);
+		$_SESSION['ORGID'] = $_POST['orgid'];
+		$api = new ApiClient($_SESSION['ORGID'], $_SESSION['USERNAME'], $_SESSION['PASSWORD'], CLIENTID, CLIENTSECURITY);
 		if ($api->Login()) {			
 			$_SESSION['api'] = $api;
 			header("Location: index.php");
@@ -33,6 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 			  </button>
 			</div>
 		<?php } ?>
+
+		<!-- Organization ID -->
+		<div class="form-element form-input">
+            <input id="orgid" class="form-element-field"  name="orgid" placeholder="Please fill in your Organization ID" type="text" required autocomplete="off" />
+            <div class="form-element-bar"></div>
+            <label class="form-element-label" for="orgid">Organization ID</label>
+    	</div>
+
 		<!-- Email -->
         <div class="form-element form-input">
             <input id="email" class="form-element-field"  name="email" placeholder="Please fill in your email" type="email" required autocomplete="off" />

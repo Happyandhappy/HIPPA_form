@@ -12,24 +12,28 @@ function unsetForm(){
 	});
 }
 
-var ajaxCnt = 0;
-var Client = function(){}
+function checkSpinner(ajaxCnt){
+	if (ajaxCnt <= 0) $('.animationload').addClass('hidden');
+	else $('.animationload').removeClass('hidden');
+}
 
+var ajaxCnt = 0;
+var table;
+var Client = function(){}
 Client.prototype = {
 	base_url : "ApiClient/Controller.php",
 	ajaxCnt  : 0,
-
-	getallFacilities : async function(){
+	init : function(){},
+	getallFacilities : function(){
 	    $.ajax({
 	        url : this.base_url,
 	        method : 'post',
 	        data : { "req_name" : "allfacilities" },
 	        beforeSend : function(){	        	
-	        	ajaxCnt++;
+	        	checkSpinner(++ajaxCnt);
 	        },
 	        complete : function(){
-	        	ajaxCnt = ajaxCnt - 1;
-	        	if (ajaxCnt == 0) $('.animationload').addClass('hidden');
+	        	checkSpinner(--ajaxCnt);
 	        },
 	        success : function(res){	        	
 	            var dt = JSON.parse(res);
@@ -50,11 +54,10 @@ Client.prototype = {
 	        method : 'post',
 	        data : { "req_name" : "allcontacts" },
 	        beforeSend : function(){	        	
-	        	ajaxCnt = ajaxCnt + 1
+	        	checkSpinner(++ajaxCnt);
 	        },
 	        complete : function(){
-	        	ajaxCnt = ajaxCnt - 1
-	        	if (ajaxCnt == 0) $('.animationload').addClass('hidden');
+	        	checkSpinner(--ajaxCnt);
 	        },
 	        success : function(res){
 	            var dt = JSON.parse(res);
@@ -81,30 +84,78 @@ Client.prototype = {
 			"User_assigned" : $('#User_assigned').val(),
 			"Notes"			: $('#Notes').val()
 		}
+		document.getElementById("Active").checked == true ? fields['Active'] =  "on": console.log("Not checked");
 
-		$('#Active').prop("checked") == true ? fields['Active'] =  "on": console.log("Not checked");
 
-		$('.animationload').removeClass('hidden');
 		$.ajax({
 			url : this.base_url,
 			method : 'post',
 			data :  fields,
+	        beforeSend : function(){	        	
+	        	checkSpinner(++ajaxCnt);
+	        },
+	        complete : function(){
+	        	checkSpinner(--ajaxCnt);
+	        },
 			success : function(res){
-				$('.animationload').addClass('hidden');
 				var dt = JSON.parse(res);
 				alert(dt.message);
 			}
 		});
+	},
+
+	getAllDeviceRegistry : function(){
+	    $.ajax({
+	        url : this.base_url,
+	        method : 'post',
+	        data : { "req_name" : "alldevice-registry" },
+	        beforeSend : function(){	        	
+	        	checkSpinner(++ajaxCnt);
+	        },
+	        complete : function(){
+	        	checkSpinner(--ajaxCnt);
+	        },
+	        success : function(res){
+	            var dt = JSON.parse(res);
+	            if (dt.status === "success"){
+	            	var keys = ["Name","Active", "Assigned_Facility", "IP_Address", "Last_Polling_Time", "Polling_Time", "User_assigned"];
+	                headContent = '<tr> <th>No</th> ';
+	                for (var i = 0 ; i < keys.length ; i++) headContent += "<th>" + keys[i] + "</th>"; headContent += "</tr>";
+
+	                bodyContent = "";
+	            	var objKeys = Object.keys(dt.message);
+
+	                for (i = 0 ; i < objKeys.length; i++){
+	                	var obj = dt.message[objKeys[i]];
+	                	bodyContent += "<tr> <td>" + (i+1) + "</td>";
+	                	for (var j = 0 ; j < keys.length ; j++) {	                		
+	                		var value = "";
+	                		if (obj[keys[j]] !="null") value = obj[keys[j]];
+	                		bodyContent += "<td>" + value + "</td>";
+	                	}
+	                	bodyContent += "</tr>";
+	                }
+
+	                $('#device_head').html(headContent);
+	                $('#device_body').html(bodyContent);
+	                console.log(bodyContent);
+	                table = $('#device-registry').DataTable();
+	            }
+	        }
+	    });
 	}
 }
 
 
-$(document).ready(function(){
+var client = new Client();
+
+$(document).ready(function(){    
+    checkSpinner(ajaxCnt);
 	unsetForm();	
 	$('#_name').change(function(){
 		unsetForm();
 		$(this.value).removeClass('hidden');
-	});	
+	});
 });
 
 

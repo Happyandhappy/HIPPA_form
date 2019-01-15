@@ -633,3 +633,11 @@ body {
     margin-bottom: 0px;
     margin-top: 0px;
 }
+
+.form-card.leads{
+  max-width: 1600px;
+}
+
+div.leads{
+  max-width: 400px;
+}

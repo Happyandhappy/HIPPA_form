@@ -1,6 +1,6 @@
 <?php
 session_start();
-include(realpath( dirname( __FILE__ ) ).'\..\config\config.php');
+require_once(__DIR__.'/../config/config.php');
 /**
  * Class Name  : Api
  */

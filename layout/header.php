@@ -8,10 +8,14 @@
   <title>HIPAAComplete</title>  
   <link rel="shortcut icon" type="image/png" href="https://hipaadev.us/favicon.ico"/>
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+  <link rel="stylesheet" href="assets/css/all.css">
   <!-- Bootstrap 4 -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+  <!-- DataTable -->
+  <link href="assets/css/datatables.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>
@@ -60,4 +64,8 @@
   </nav>
   <!--/.Navbar-->
 
+  <!-- Spiner -->
+  <div class="animationload">
+      <div class="osahanloading"></div>
+  </div>
 

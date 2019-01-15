@@ -1,17 +1,12 @@
 <?php
 require_once('ApiClient/Client.php');
 if (!isset($_SESSION['user']) || !isset($_SESSION['api'])){
-	header("Location: login.php");
-	exit();
+    header("Location: login.php");
+    exit();
 }
 ?>
 
 <?php include('layout/header.php');?>
-
-<!-- Spiner -->
-<div class="animationload">
-    <div class="osahanloading"></div>
-</div>
 
 <!-- Form -->
 <div class="form-card">
@@ -56,7 +51,7 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['api'])){
             <div class="form-checkbox form-checkbox-inline">
                 <div class="form-checkbox-legend">Active Status?</div>
                 <label class="form-checkbox-label">
-                    <input name="Active" class="form-checkbox-field" type="checkbox" />
+                    <input name="Active" id="Active" class="form-checkbox-field" type="checkbox" />
                     <i class="form-checkbox-button"></i>
                     <span>Active</span>
                 </label>
@@ -101,7 +96,7 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['api'])){
             <div class="row">
                 <!-- Organization -->
                 <div class="col-sm form-element form-input">
-                    <input id="Organization" class="form-element-field" name="Organization" placeholder="Please fill in Organization" type="input" required autocomplete="off"/>
+                    <input id="Organization" class="form-element-field" name="Organization" placeholder="Please fill in Organization" type="input" required autocomplete="off" value="<?php  echo($_SESSION['ORGID']); ?>" disabled/>
                     <div class="form-element-bar"></div>
                     <label class="form-element-label" for="Organization">Organization</label>
                 </div>
@@ -147,11 +142,9 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['api'])){
 <?php include('layout/footer.php'); ?>
 <script type="text/javascript">
     $(document).ready(function(){
-        var client = new Client();
+        // $('.animationload').addClass('hidden');
         client.getallFacilities();
         client.getallContacts();
-        // $('.animationload').addClass('hidden');
-
         $('#device_registry').on('submit', function (e) {
             e.preventDefault();
             if ($('#submit').hasClass('disabled')) return;
